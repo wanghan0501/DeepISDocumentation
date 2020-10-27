@@ -1,7 +1,5 @@
 # DeepISDocumentation
-文档入口地址: https://qinyimin.github.io/DeepISDocumentation/
-
-## Install
+文档入口地址: https://panzhengo1.github.io/DeepISDocumentation/
 
 本文档使用 [docsify](https://docsify.js.org/#/) 工具编写。与Gitbook相比，docsify无需build，不会生成静态html文件，是一个可以快速生成文档网站的工具。[docsify文档](https://docsify.js.org/#/quickstart) 介绍了使用该工具的方法，简单来说，你只需要全局安装命令行工具：
 
