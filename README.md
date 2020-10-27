@@ -10,7 +10,7 @@ npm i docsify-cli -g
 然后将本仓库克隆至本地：
 
 ```javascript
-git clone git@github.com:Qinyimin/DeepISDocumentation.git
+git clone https://github.com/panzhengo1/DeepISDocumentation.git
 ```
 
 然后运行本地服务器来预览本文档：
