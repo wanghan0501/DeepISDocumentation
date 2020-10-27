@@ -890,3 +890,197 @@ POST /measurements/measurementsUpdate
 }
 更新成功返回200，失败返回原因
 ```
+
+## 新增api需求（10/27/2020）
+
+###  获取每日新增病例数
+
+|  方法名  |      getDailyAddCase       |
+| :------: | :------------------------: |
+| 传入参数 |   （beginDate, endDate）   |
+|  返回值  | 两date之间的每日检查病例数 |
+
+```javascript
+GET /case_info/getDailyAddCase
+{
+	"date":["2020/10/12","2020/10/13","2020/10/14"]
+    "DailyAdd":[150,140,124]
+}
+(日期，每日新增 ps:个数一致，分别对应,如：date[0]新增了DailyAdd[0]个病例)
+```
+
+### 获取所有病人病例情况
+
+|  方法名  |   getCaseList    |
+| :------: | :--------------: |
+| 传入参数 |       null       |
+|  返回值  | 所有病人病例情况 |
+
+```javascript
+GET 
+[{
+      "PatientName": "ji lu xiu",
+      "PatientID": "0009369854",
+      "PatientSex": "女",
+      "PatientAge":"36",
+      "dateList":[	//该病人在XX日子进行了检查
+          {
+              "StudyDate":"20130603",
+              "caseNum":1,
+              "caseList":[	//该病例在某天进行了几次检查
+                  {
+                      "caseID":"0009369854:1.2.840.78.75.7.5.280728.1370251044:20130603",
+                      "AccessionNumber":"CT00549838",
+                      "StudyInstanceUID": "1.2.840.78.75.7.5.280728.1370251044",
+                      "modelStatus":false, 
+                      "annotatedStatus":false,
+                  }, {
+                      ...
+                  },.....                         
+              ]
+          },  {
+              ......
+          }, {
+              ......
+          }.....
+        ]
+    },{
+       .....
+    }
+]
+[
+        {
+      "PatientName": "ji lu xiu",
+      "PatientID": "0009369854",
+      "PatientSex": "女",
+      "PatientAge":"36",
+      "dateList":[
+          {
+              "StudyDate":"20130603",
+              "caseNum":2,
+              "caseList":[
+                  {
+                      "caseID":"0009369854:1.2.840.78.75.7.5.280728.1370251044:20130603",
+                      "AccessionNumber":"CT00549838",
+                      "StudyInstanceUID": "1.2.840.78.75.7.5.280728.1370251044",
+                      "modelStatus":false, 
+                      "annotatedStatus":false,
+                  },
+                  {
+                    "caseID":"0009369854:1.2.840.78.75.7.5.280728.1467894597:20130603",
+                    "AccessionNumber":"CT00549838",
+                    "StudyInstanceUID": "1.2.840.78.75.7.5.280728.1467894597",
+                    "modelStatus":false, 
+                    "annotatedStatus":false,
+                },                              
+              ]
+          },  
+        ]
+    },
+    {
+      "PatientName": "tao qi fa",
+      "PatientID": "0008987865",
+      "PatientSex": "男",
+      "PatientAge":"65",
+      "dateList":[
+          {
+              "StudyDate":"20040310",
+              "caseNum":1,
+              "caseList":[
+                  {
+                      "caseID":"0008987865:1.2.840.78.75.7.5.1842989.1364010904:0008987865",
+                      "AccessionNumber":"CT00549838",
+                      "StudyInstanceUID":"1.2.840.78.75.7.5.1842989.1364010904",
+                      "modelStatus":false, 
+                      "annotatedStatus":true,
+                  },                                    
+              ]
+          },
+          {
+            "StudyDate":"20040310",
+            "caseNum":2,
+            "caseList":[
+                {
+                    "caseID":"0008987865:1.2.840.78.75.7.5.1842989.1364010904:0008987865",
+                    "AccessionNumber":"CT00549838",
+                    "StudyInstanceUID":"1.2.840.78.75.7.5.1842989.1364010904",
+              
+]
+```
+
+### 修改标注状态（无需标注->待标注）
+
+|  方法名  | modifyAnnotatedStatus |
+| :------: | :-------------------: |
+| 传入参数 |      caseID列表       |
+|  返回值  |                       |
+
+```javascript
+POST /case_info/modifyAnnotatedStatus
+{}
+status:200
+```
+
+### 获取标注者/审核者列表
+
+|  方法名  | getUserListByRole |
+| :------: | :---------------: |
+| 传入参数 |      roleiD       |
+|  返回值  |   userID的列表    |
+
+```javascript
+POST /user_info/getUserListByRole
+[{
+    'userID': 0,
+    'userName': admin,
+}{
+    ...
+ }]
+```
+
+### 审核者获取对应标注者列表
+
+|  方法名  | getAnnotatorListByReviewer |
+| :------: | :------------------------: |
+| 传入参数 |        审核者userID        |
+|  返回值  |      标注者userID列表      |
+
+```javascript
+POST /annotator_reviewer/getAnnotatorListByReviewer
+[{
+    'userID': 0,
+    'userName': admin,
+}{
+    ...
+}]
+```
+
+### 给审核者分配标注者
+
+|  方法名  | assignReviewer |
+| :------: | :------------: |
+| 传入参数 |      如下      |
+|  返回值  |    分配结果    |
+
+```javascript
+POST /annotator_reviewer/assignReviewer
+传入参数：{
+    'reviewerID': 0,
+    'annotatorID': [1, 2, 3]
+}
+status: 200
+```
+
+### 修改模型检测状态码（未检测->已检测）
+
+|  方法名  | modifyModelStatus |
+| :------: | :---------------: |
+| 传入参数 |      caseID       |
+|  返回值  |     修改结果      |
+
+```javascript
+POST /case_info/modifyModelStatus
+{}
+status:200
+```
+
