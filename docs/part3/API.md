@@ -1010,32 +1010,15 @@ GET
 
 ### 修改标注状态（无需标注->待标注）
 
-|  方法名  | modifyAnnotatedStatus |
-| :------: | :-------------------: |
-| 传入参数 |      caseID列表       |
-|  返回值  |                       |
+|  方法名  |        modifyAnnotatedStatus        |
+| :------: | :---------------------------------: |
+| 传入参数 | {"caseID":["caseID1","caseID2"...]} |
+|  返回值  |                                     |
 
 ```javascript
 POST /case_info/modifyAnnotatedStatus
 {}
 status:200
-```
-
-### 获取标注者/审核者列表
-
-|  方法名  | getUserListByRole |
-| :------: | :---------------: |
-| 传入参数 |      roleiD       |
-|  返回值  |   userID的列表    |
-
-```javascript
-POST /user_info/getUserListByRole
-[{
-    'userID': 0,
-    'userName': admin,
-}{
-    ...
- }]
 ```
 
 ### 审核者获取对应标注者列表
@@ -1082,5 +1065,47 @@ status: 200
 POST /case_info/modifyModelStatus
 {}
 status:200
+```
+
+## 新增api需求（10/29/2020）
+
+###  获取已有分配关系
+
+|  方法名  |       getAssignedRelations        |
+| :------: | :-------------------------------: |
+| 传入参数 |               null                |
+|  返回值  | 全部annotator、reviewer的对应关系 |
+
+```javascript
+GET /annotator_reviewer/getAssignedRelations
+{
+    "reviewer":[
+        {
+            "userID":2,
+            "name":"huanghao",
+            "annotators":[6,5,4,14]//这个审核者所管理的标注者的userID
+        },
+        {
+            "userID":3,
+            "name":"yangxu",
+            "annotators":[25,24,23,5]
+        }，
+        ...
+    ],
+    "annotator":[
+        {
+            "name":"panzhen",
+            "userID":6,
+            "reviewers":["huanghao","huanghao1"]
+            //这个标注者所属的审核者的name，这里要userID是因为标注者并不会改动他的审核者
+        },
+        {
+            "name":"qin",
+            "userID":5,
+            "reviewers":["huanghao","yangxu"]
+        }，
+        ...
+     ]
+}
 ```
 
