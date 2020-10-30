@@ -1029,7 +1029,7 @@ status:200
 |  返回值  |      标注者userID列表      |
 
 ```javascript
-POST /annotator_reviewer/getAnnotatorListByReviewer
+POST /annotator_reviewer/getAnnotatorListByReviewer/<reviewerID>
 [{
     'userID': 0,
     'userName': admin,
@@ -1077,7 +1077,7 @@ status:200
 |  返回值  | 全部annotator、reviewer的对应关系 |
 
 ```javascript
-GET /annotator_reviewer/getAssignedRelations
+GET /users/getAssignedRelations
 {
     "reviewer":[
         {
