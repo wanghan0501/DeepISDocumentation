@@ -1109,3 +1109,42 @@ GET /users/getAssignedRelations
 }
 ```
 
+## 新增api需求（10/30/2020）
+
+###  获取标注者列表
+
+|  方法名  | getAnnotatorListAndCase |
+| :------: | :---------------------: |
+| 传入参数 |          null           |
+|  返回值  | 标注者列表及其分配情况  |
+
+```javascript
+GET /user_case/getAnnotatorListAndCase
+[{
+    "userID": 2,
+    "userName": "huanghao",
+    "assignedCaseNum": 1, 	//已经分配给该标注者的case数量
+    "assignedCaseList": [3]	//已经分配给该标注者的caseID列表，未分配时为[]
+  }, {
+    "userID": 3,
+    "userName": "yangxu",
+    "assignedCaseNum": 2, 
+    "assignedCaseList": [1, 2]
+  }]
+```
+
+###  修改标注者case分配情况
+
+|  方法名  | modifyAnnotatorCase  |
+| :------: | :------------------: |
+| 传入参数 | userID, caseID的list |
+|  返回值  |       修改结果       |
+
+```javascript
+GET /user_case/modifyAnnotatorCase
+[{
+    "userID":2,
+    "assignedCaseList":[1, 2, 3] //分配给该标注者的caseID列表。
+}]
+```
+
