@@ -1208,7 +1208,7 @@ POST /case_info/getAnnotatorsCaseInfo
 ]
 ```
 
-![image-20201031182003315](C:\Users\Administrator.SC-201906251340\AppData\Roaming\Typora\typora-user-images\image-20201031182003315.png)
+![image-20201031182003315](..\image\image-20201031182003315.png)
 
 相应的前端UI
 
@@ -1275,4 +1275,4 @@ POST /case_info/ReviewersCaseInfo
 ]
 ```
 
-![image-20201031182023652](C:\Users\Administrator.SC-201906251340\AppData\Roaming\Typora\typora-user-images\image-20201031182023652.png)
+![image-20201031182023652](..\image\image-20201031182023652.png)
