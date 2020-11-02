@@ -1148,3 +1148,131 @@ GET /user_case/modifyAnnotatorCase
 }]
 ```
 
+## 新增api需求（10/31/2020-from csh）
+
+### 标注者标注管理界面获取case信息及相应的状态信息
+
+|  方法名  |                    getAnnotatorsCaseInfo                     |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  |        该标注者所需标注的所有case信息及相应case的状态        |
+|   备注   | 如果statusOfAnnotated、statusOfReviewed字段相应信息无法和其他字段同时获取，可以分开写，但希望最后能按下方给出的格式组织数据返回。如果文档中关于statusOfAnnotated、statusOfReviewed两个字段的描述有问题联系csh一起讨论 |
+
+```javascript
+POST /case_info/getAnnotatorsCaseInfo
+[
+    userID: 6
+]
+
+[
+  {
+    PatientName: 'ji lu xiu',
+    PatientID: '009369854',
+    AccessionNumber: 'CT00549838',
+    StudyDate: '20130603',
+    modalities: 'CT',
+    statusOfAnnotated: ['0'], //该标注者对该例case的标注状态，'0'表示未标注，’1’表示已标注
+    statusOfReviewed: ['-1'], //该标注者的审核者对该例case的审核状态，‘-1’表示尚未提交审核（ statusOfAnnotated为0的，statusOfReviewed一定为-1）,'0'表示未审核，’1’表示已审核
+    StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'
+  },
+  {
+    PatientName: 'li gang',
+    PatientID: '0009629786',
+    AccessionNumber: 'CT00566598',
+    StudyDate: '20130620',
+    modalities: 'CT',
+    statusOfAnnotated: ['1'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1674158.1371717835'
+  },
+  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    AccessionNumber: 'CT00705850',
+    StudyDate: '20131030',
+    modalities: 'CT',
+    statusOfAnnotated: ['0'],
+    statusOfReviewed: ['-1'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.10839406.1383139266'
+  },
+  {
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    AccessionNumber: 'CT00471087',
+    StudyDate: '20130323',
+    modalities: 'CT',
+    statusOfAnnotated: ['1'],
+    statusOfReviewed: ['1'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1842989.1364010904'
+  }
+]
+```
+
+![Snipaste_2020-10-31_20-26-42](..\image\Snipaste_2020-10-31_20-26-42.png)
+
+相应的前端UI
+
+### 审核者审核标注管理界面获取case信息及相应的状态信息
+
+|  方法名  |                     getReviewersCaseInfo                     |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  | 该审核者所需审核的所有case信息、标注相应case的标注人员及相应case的状态 |
+|   备注   | 如果AnnotatorList、statusOfAnnotated、statusOfReviewed字段相应信息无法和其他字段同时获取，可以分开写，但希望最后能按下方给出的格式组织数据返回。如果文档中关于statusOfAnnotated、statusOfReviewed两个字段的描述有问题联系csh一起讨论 |
+
+```javascript
+POST /case_info/ReviewersCaseInfo
+[
+    userID: 6
+]
+
+
+[
+  {
+    PatientName: 'ji lu xiu',
+    PatientID: '009369854',
+    AccessionNumber: 'CT00549838',
+    StudyDate: '20130603',
+    modalities: 'CT',
+    AnnotatorList: ['huanghao','pz'],//该例case的标注人员列表
+    statusOfAnnotated: ['0','0'],//该例case每个标注人员完成标注工作的标注状态，'0'表示未标注，’1’表示已标注
+    statusOfReviewed: ['-1'],//该审核者对该例case的审核状态，'0'表示未审核，’1’表示已审核， ‘-1’表示尚未提交审核。当由两个标注者标注的一例case时有点复杂。。。。。如果statusOfAnnotated为['0','0']即两个标注者都没标注，那么statusOfReviewed为‘-1’（尚未提交审核）；如果statusOfAnnotated为['0','1']或['1','0']，那么statusOfReviewed为‘0’（未审核）；如果statusOfAnnotated为['1','1']，statusOfReviewed可能为‘0’，可能为‘-1’，由user_case表中的reviewed决定。
+    StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'
+  },
+  {
+    PatientName: 'li gang',
+    PatientID: '0009629786',
+    AccessionNumber: 'CT00566598',
+    StudyDate: '20130620',
+    modalities: 'CT',
+    AnnotatorList: ['huanghao','pz'],
+    statusOfAnnotated: ['1','0'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1674158.1371717835'
+  },
+  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    AccessionNumber: 'CT00705850',
+    StudyDate: '20131030',
+    modalities: 'CT',
+    AnnotatorList: ['huanghao','pz'],
+    statusOfAnnotated: ['0','1'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.10839406.1383139266'
+  },
+  {
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    AccessionNumber: 'CT00471087',
+    StudyDate: '20130323',
+    modalities: 'CT',
+    AnnotatorList: ['huanghao','pz'],
+    statusOfAnnotated: ['1','1'],
+    statusOfReviewed: ['1'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1842989.1364010904'
+  }
+]
+```
+
+![Snipaste_2020-10-31_20-26-07](..\image\Snipaste_2020-10-31_20-26-07.png)
