@@ -1170,9 +1170,8 @@ POST /case_info/getAnnotatorsCaseInfo
     PatientID: '009369854',
     AccessionNumber: 'CT00549838',
     StudyDate: '20130603',
-    modalities: 'CT',
     statusOfAnnotated: ['0'], //该标注者对该例case的标注状态，'0'表示未标注，’1’表示已标注
-    statusOfReviewed: ['-1'], //该标注者的审核者对该例case的审核状态，‘-1’表示尚未提交审核（ statusOfAnnotated为0的，statusOfReviewed一定为-1）,'0'表示未审核，’1’表示已审核
+    statusOfReviewed: ['0'], //该标注者的审核者对该例case的审核状态，'0'表示未审核，’1’表示已审核
     StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'
   },
   {
@@ -1180,7 +1179,6 @@ POST /case_info/getAnnotatorsCaseInfo
     PatientID: '0009629786',
     AccessionNumber: 'CT00566598',
     StudyDate: '20130620',
-    modalities: 'CT',
     statusOfAnnotated: ['1'],
     statusOfReviewed: ['0'],
     StudyInstanceUID: '1.2.840.78.75.7.5.1674158.1371717835'
@@ -1190,9 +1188,8 @@ POST /case_info/getAnnotatorsCaseInfo
     PatientID: '0001053245',
     AccessionNumber: 'CT00705850',
     StudyDate: '20131030',
-    modalities: 'CT',
     statusOfAnnotated: ['0'],
-    statusOfReviewed: ['-1'],
+    statusOfReviewed: ['0'],
     StudyInstanceUID: '1.2.840.78.75.7.5.10839406.1383139266'
   },
   {
@@ -1200,7 +1197,6 @@ POST /case_info/getAnnotatorsCaseInfo
     PatientID: '0008987865',
     AccessionNumber: 'CT00471087',
     StudyDate: '20130323',
-    modalities: 'CT',
     statusOfAnnotated: ['1'],
     statusOfReviewed: ['1'],
     StudyInstanceUID: '1.2.840.78.75.7.5.1842989.1364010904'
