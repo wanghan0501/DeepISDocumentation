@@ -1319,3 +1319,30 @@ POST /case_info/getReviewersCasesStatus
 ]
 ```
 
+------
+
+## 新增api需求(11/2/2020)
+
+### 返回所有待标注的病例数据
+
+|  方法名  |                   getAnnotateList                   |
+| :------: | :-------------------------------------------------: |
+| 传入参数 |                        null                         |
+|  返回值  | 所有待标注的病例列表（annotatedStatus不为-1的时候） |
+
+```javascript
+GET /case_info/getAnnotateList
+[  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    assignedAnnotator: ['huanghao','pz'],
+    caseID: '0001053245:1.2.840.78.75.7.5.10839406.1383139266:1.3.12.2.1107.5.1.4.66043.30000013103006375212500083837'
+  },{
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    assignedAnnotator: [],
+    caseID: '0008987865:1.2.840.78.75.7.5.1842989.1364010904:1.3.12.2.1107.5.1.4.73473.30000013032215343534300021955'
+  }]
+```
+
+## 
