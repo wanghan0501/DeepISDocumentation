@@ -1217,7 +1217,7 @@ POST /case_info/getAnnotatorsCaseInfo
 |   备注   | 如果AnnotatorList、statusOfAnnotated、statusOfReviewed字段相应信息无法和其他字段同时获取，可以分开写，但希望最后能按下方给出的格式组织数据返回。如果文档中关于statusOfAnnotated、statusOfReviewed两个字段的描述有问题联系csh一起讨论 |
 
 ```javascript
-POST /case_info/ReviewersCaseInfo
+POST /case_info/getReviewersCaseInfo
 [
     userID: 6
 ]
@@ -1272,3 +1272,50 @@ POST /case_info/ReviewersCaseInfo
 ```
 
 ![Snipaste_2020-10-31_20-26-07](..\image\Snipaste_2020-10-31_20-26-07.png)
+
+### 标注者所需标注case的标注工作、审核工作情况统计
+
+|  方法名  |                   getAnnotatorsCasesStatus                   |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  | 该标注者所需标注的case中，已标注的case数，未标注的case数，已审核的case数，未审核的case数 |
+
+```javascript
+POST /case_info/getAnnotatorsCasesStatus
+[
+    userID: 6
+]
+
+[
+    {
+        annotatedCase:2,
+        unannotatedCase:2,
+        reviewedCase:1,
+        unreviewedCase:3,
+    }
+]
+```
+
+### 审核者所需审核case的标注工作、审核工作情况统计
+
+|  方法名  |                   getReviewersCasesStatus                    |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  | 该审核者所需审核的case中，已标注的case数，未标注的case数(这里关于标注状态的统计针对的是case，如果是合并审核的逻辑，比如标注者A和B都负责标注case1, A已经标完，B没标完，那么这一例case的标注状态为未标注)，已审核的case数，未审核的case数 |
+
+```javascript
+POST /case_info/getReviewersCasesStatus
+[
+    userID: 6
+]
+
+[
+    {
+        annotatedCase:2,
+        unannotatedCase:2,
+        reviewedCase:1,
+        unreviewedCase:3,
+    }
+]
+```
+
