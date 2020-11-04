@@ -1160,9 +1160,9 @@ GET /user_case/modifyAnnotatorCase
 
 ```javascript
 POST /case_info/getAnnotatorsCaseInfo
-[
+{
     userID: 6
-]
+}
 
 [
   {
@@ -1218,9 +1218,9 @@ POST /case_info/getAnnotatorsCaseInfo
 
 ```javascript
 POST /case_info/getReviewersCaseInfo
-[
-    userID: 6
-]
+{
+    userID: 2
+}
 
 
 [
@@ -1229,10 +1229,9 @@ POST /case_info/getReviewersCaseInfo
     PatientID: '009369854',
     AccessionNumber: 'CT00549838',
     StudyDate: '20130603',
-    modalities: 'CT',
     AnnotatorList: ['huanghao','pz'],//该例case的标注人员列表
     statusOfAnnotated: ['0','0'],//该例case每个标注人员完成标注工作的标注状态，'0'表示未标注，’1’表示已标注
-    statusOfReviewed: ['-1'],//该审核者对该例case的审核状态，'0'表示未审核，’1’表示已审核， ‘-1’表示尚未提交审核。当由两个标注者标注的一例case时有点复杂。。。。。如果statusOfAnnotated为['0','0']即两个标注者都没标注，那么statusOfReviewed为‘-1’（尚未提交审核）；如果statusOfAnnotated为['0','1']或['1','0']，那么statusOfReviewed为‘0’（未审核）；如果statusOfAnnotated为['1','1']，statusOfReviewed可能为‘0’，可能为‘-1’，由user_case表中的reviewed决定。
+    statusOfReviewed: ['-1'],
     StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'
   },
   {
@@ -1240,7 +1239,6 @@ POST /case_info/getReviewersCaseInfo
     PatientID: '0009629786',
     AccessionNumber: 'CT00566598',
     StudyDate: '20130620',
-    modalities: 'CT',
     AnnotatorList: ['huanghao','pz'],
     statusOfAnnotated: ['1','0'],
     statusOfReviewed: ['0'],
@@ -1251,7 +1249,6 @@ POST /case_info/getReviewersCaseInfo
     PatientID: '0001053245',
     AccessionNumber: 'CT00705850',
     StudyDate: '20131030',
-    modalities: 'CT',
     AnnotatorList: ['huanghao','pz'],
     statusOfAnnotated: ['0','1'],
     statusOfReviewed: ['0'],
@@ -1262,7 +1259,6 @@ POST /case_info/getReviewersCaseInfo
     PatientID: '0008987865',
     AccessionNumber: 'CT00471087',
     StudyDate: '20130323',
-    modalities: 'CT',
     AnnotatorList: ['huanghao','pz'],
     statusOfAnnotated: ['1','1'],
     statusOfReviewed: ['1'],
@@ -1282,9 +1278,9 @@ POST /case_info/getReviewersCaseInfo
 
 ```javascript
 POST /case_info/getAnnotatorsCasesStatus
-[
+{
     userID: 6
-]
+}
 
 [
     {
@@ -1301,17 +1297,17 @@ POST /case_info/getAnnotatorsCasesStatus
 |  方法名  |                   getReviewersCasesStatus                    |
 | :------: | :----------------------------------------------------------: |
 | 传入参数 |                            userID                            |
-|  返回值  | 该审核者所需审核的case中，已标注的case数，未标注的case数(这里关于标注状态的统计针对的是case，如果是合并审核的逻辑，比如标注者A和B都负责标注case1, A已经标完，B没标完，那么这一例case的标注状态为未标注)，已审核的case数，未审核的case数 |
+|  返回值  | 该审核者所需审核的case中，已标注的case数，未标注的case数(这里关于标注状态的统计针对的是case，如果是合并审核的逻辑，比如标注者A和B都负责标注case1, A的annotated为true，B的annotated为true，那么这一例case的标注状态为已标注)，已审核的case数，未审核的case数 |
 
 ```javascript
 POST /case_info/getReviewersCasesStatus
-[
-    userID: 6
-]
+{
+    userID: 2
+}
 
 [
     {
-        annotatedCase:2,
+        annotatedCase:2, // 
         unannotatedCase:2,
         reviewedCase:1,
         unreviewedCase:3,
