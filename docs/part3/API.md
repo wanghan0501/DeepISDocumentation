@@ -1299,4 +1299,26 @@ GET /case_info/getAnnotateList
   }]
 ```
 
-## 
+## 新增api需求(11/10/2020)
+
+### 返回所有待标注的病例数据
+
+|  方法名  |     searchNodes      |
+| :------: | :------------------: |
+| 传入参数 |         如下         |
+|  返回值  | 符合条件的淋巴结列表 |
+
+```javascript
+GET /measurements/searchNodes
+输入参数：
+[{
+    "location": "BW",
+    "shortestDiameter": [3, 5],	//左闭右开
+    "evalution": "positive",	//定性
+    "texture": "inhomogeneous",	//淋巴结质地
+    "marginalGrading": "appearedIrregular",	//淋巴结边缘分级
+    "marginalEnhancement": "no",	//淋巴结边缘强化
+    "relationshipWithVessels": "notExistFatSpace",	//与血管的关系
+}]
+```
+
