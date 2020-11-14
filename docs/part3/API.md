@@ -1374,7 +1374,7 @@ GET /measurements/searchNodes
 |  返回值  |   符合条件的淋巴结列表    |
 
 ```javascript
-GET /measurements/getNodeSituationByPatient
+POST /measurements/getNodeSituationByPatient
 输入参数：
 {
     patientID:"0001053245"
