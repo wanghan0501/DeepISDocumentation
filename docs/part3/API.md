@@ -1148,3 +1148,275 @@ GET /user_case/modifyAnnotatorCase
 }]
 ```
 
+## 新增api需求（10/31/2020-from csh）
+
+### 标注者标注管理界面获取case信息及相应的状态信息
+
+|  方法名  |                    getAnnotatorsCaseInfo                     |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  |        该标注者所需标注的所有case信息及相应case的状态        |
+|   备注   | 如果statusOfAnnotated、statusOfReviewed字段相应信息无法和其他字段同时获取，可以分开写，但希望最后能按下方给出的格式组织数据返回。如果文档中关于statusOfAnnotated、statusOfReviewed两个字段的描述有问题联系csh一起讨论 |
+
+```javascript
+POST /case_info/getAnnotatorsCaseInfo
+{
+    userID: 6
+}
+
+[
+  {
+    PatientName: 'ji lu xiu',
+    PatientID: '009369854',
+    AccessionNumber: 'CT00549838',
+    StudyDate: '20130603',
+    statusOfAnnotated: ['0'], //该标注者对该例case的标注状态，'0'表示未标注，’1’表示已标注
+    statusOfReviewed: ['0'], //该标注者的审核者对该例case的审核状态，'0'表示未审核，’1’表示已审核
+    StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'
+  },
+  {
+    PatientName: 'li gang',
+    PatientID: '0009629786',
+    AccessionNumber: 'CT00566598',
+    StudyDate: '20130620',
+    statusOfAnnotated: ['1'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1674158.1371717835'
+  },
+  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    AccessionNumber: 'CT00705850',
+    StudyDate: '20131030',
+    statusOfAnnotated: ['0'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.10839406.1383139266'
+  },
+  {
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    AccessionNumber: 'CT00471087',
+    StudyDate: '20130323',
+    statusOfAnnotated: ['1'],
+    statusOfReviewed: ['1'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1842989.1364010904'
+  }
+]
+```
+
+![Snipaste_2020-10-31_20-26-42](..\image\Snipaste_2020-10-31_20-26-42.png)
+
+相应的前端UI
+
+### 审核者审核标注管理界面获取case信息及相应的状态信息
+
+|  方法名  |                     getReviewersCaseInfo                     |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  | 该审核者所需审核的所有case信息、标注相应case的标注人员及相应case的状态 |
+|   备注   | 如果AnnotatorList、statusOfAnnotated、statusOfReviewed字段相应信息无法和其他字段同时获取，可以分开写，但希望最后能按下方给出的格式组织数据返回。如果文档中关于statusOfAnnotated、statusOfReviewed两个字段的描述有问题联系csh一起讨论 |
+
+```javascript
+POST /case_info/getReviewersCaseInfo
+{
+    userID: 2
+}
+
+
+[
+  {
+    PatientName: 'ji lu xiu',
+    PatientID: '009369854',
+    AccessionNumber: 'CT00549838',
+    StudyDate: '20130603',
+    AnnotatorList: ['huanghao','pz'],//该例case的标注人员列表
+    statusOfAnnotated: ['0','0'],//该例case每个标注人员完成标注工作的标注状态，'0'表示未标注，’1’表示已标注
+    statusOfReviewed: ['-1'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'
+  },
+  {
+    PatientName: 'li gang',
+    PatientID: '0009629786',
+    AccessionNumber: 'CT00566598',
+    StudyDate: '20130620',
+    AnnotatorList: ['huanghao','pz'],
+    statusOfAnnotated: ['1','0'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1674158.1371717835'
+  },
+  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    AccessionNumber: 'CT00705850',
+    StudyDate: '20131030',
+    AnnotatorList: ['huanghao','pz'],
+    statusOfAnnotated: ['0','1'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.10839406.1383139266'
+  },
+  {
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    AccessionNumber: 'CT00471087',
+    StudyDate: '20130323',
+    AnnotatorList: ['huanghao','pz'],
+    statusOfAnnotated: ['1','1'],
+    statusOfReviewed: ['1'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1842989.1364010904'
+  }
+]
+```
+
+![Snipaste_2020-10-31_20-26-07](..\image\Snipaste_2020-10-31_20-26-07.png)
+
+### 标注者所需标注case的标注工作、审核工作情况统计
+
+|  方法名  |                   getAnnotatorsCasesStatus                   |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  | 该标注者所需标注的case中，已标注的case数，未标注的case数，已审核的case数，未审核的case数 |
+
+```javascript
+POST /case_info/getAnnotatorsCasesStatus
+{
+    userID: 6
+}
+
+[
+    {
+        annotatedCase:2,
+        unannotatedCase:2,
+        reviewedCase:1,
+        unreviewedCase:3,
+    }
+]
+```
+
+### 审核者所需审核case的标注工作、审核工作情况统计
+
+|  方法名  |                   getReviewersCasesStatus                    |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  | 该审核者所需审核的case中，已标注的case数，未标注的case数(这里关于标注状态的统计针对的是case，如果是合并审核的逻辑，比如标注者A和B都负责标注case1, A的annotated为true，B的annotated为true，那么这一例case的标注状态为已标注)，已审核的case数，未审核的case数 |
+
+```javascript
+POST /case_info/getReviewersCasesStatus
+{
+    userID: 2
+}
+
+[
+    {
+        annotatedCase:2, // 
+        unannotatedCase:2,
+        reviewedCase:1,
+        unreviewedCase:3,
+    }
+]
+```
+
+------
+
+## 新增api需求(11/2/2020)
+
+### 返回所有待标注的病例数据
+
+|  方法名  |                   getAnnotateList                   |
+| :------: | :-------------------------------------------------: |
+| 传入参数 |                        null                         |
+|  返回值  | 所有待标注的病例列表（annotatedStatus不为-1的时候） |
+
+```javascript
+GET /case_info/getAnnotateList
+[  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    assignedAnnotator: ['huanghao','pz'],
+    caseID: '0001053245:1.2.840.78.75.7.5.10839406.1383139266:1.3.12.2.1107.5.1.4.66043.30000013103006375212500083837'
+  },{
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    assignedAnnotator: [],
+    caseID: '0008987865:1.2.840.78.75.7.5.1842989.1364010904:1.3.12.2.1107.5.1.4.73473.30000013032215343534300021955'
+  }]
+```
+
+## 新增api需求(11/10/2020)
+
+### 返回所有待标注的病例数据
+
+|  方法名  |     searchNodes      |
+| :------: | :------------------: |
+| 传入参数 |         如下         |
+|  返回值  | 符合条件的淋巴结列表 |
+
+```javascript
+GET /measurements/searchNodes
+输入参数：
+[{
+    "location": "BW",
+    "shortestDiameter": [3, 5],	//左闭右开
+    "evalution": "positive",	//定性
+    "texture": "inhomogeneous",	//淋巴结质地
+    "marginalGrading": "appearedIrregular",	//淋巴结边缘分级
+    "marginalEnhancement": "no",	//淋巴结边缘强化
+    "relationshipWithVessels": "notExistFatSpace",	//与血管的关系
+}]
+```
+
+## 新增API需求（11/14/2020）
+
+### 获取病人结节情况
+
+|  方法名  | getNodeSituationByPatient |
+| :------: | :-----------------------: |
+| 传入参数 |           如下            |
+|  返回值  |   符合条件的淋巴结列表    |
+
+```javascript
+POST /measurements/getNodeSituationByPatient
+输入参数：
+{
+    patientID:"0001053245"
+}
+返回结果://暂未确定返回状态码
+{
+    // 检查日期，20131012-1表示当天第一次检查，20131012-2当天第二次检查，日期按顺序排列
+    dateList:['20131012-1','20131012-2','20141102','20150123','20160904','20170512'],
+
+    // 髂内近结节个数，数组位置与检查日期对应,如果没有该分类的结界，结果为0
+    QNJ:[10,2,6,9,0,0],
+
+    // 髂内远
+    QNY:[10,2,6,9,4,6],
+
+    // 闭孔头
+    BT:[2,1,3,1,2,1],
+
+    //闭孔尾
+    BW:[0,0,0,0,0,0],
+
+    //髂外/髂总 
+    QWQZ:[0,0,0,0,0,0]
+
+    // 分歧候选
+    UK:[0,0,0,0,0,0],
+
+    // 系膜内
+    XM:[0,0,0,0,0,0],
+
+    // 髂总动脉分叉血管
+    QZJ:[0,0,0,0,0,0]  
+
+    // 非侧方 （按拼音大写的emmmm，可以改）
+    FC:[2,6,10,10,10,0],
+
+    // 侧方
+    C:[2,6,10,10,10,0],
+
+    // 最大结节短轴长度(还是对应检查日期)
+    maxSize:[5,2,3,5,1,3],
+
+}
+```
+
