@@ -33,7 +33,7 @@ POST /users/login
 |  返回值  | 与该用户id匹配的用户全部信息 |
 
 ```javascript
-GET /users/{userId}
+POST /users/getUserByID/{userId}
 
 {
     userId: 001,
@@ -51,7 +51,7 @@ GET /users/{userId}
 |  返回值  | 一个包含系统所有用户信息的列表 |
 
 ```javascript
-GET /users
+POST /users/getAllUsers
 
 [
     {
@@ -71,7 +71,7 @@ GET /users
 |  返回值  | 用户信息是否添加成功  |
 
 ```javascript
-POST /users
+POST /users/addUser
 {
     username: "qin", 
     password: "111",
@@ -89,7 +89,7 @@ Status: 200
 |  返回值  |              用户信息是否更新成功              |
 
 ```javascript
-POST /users/{userId}
+POST /users/updateUserByID/{userId}
 {
     userId: 007,
     username: "qin", 
@@ -107,7 +107,7 @@ Status: 200
 |  返回值  | 用户信息是否删除成功 |
 
 ```javascript
-DELETE /users/{userId}
+DELETE /users/deleteUserByID/{userId}
 
 Status: 200
 ```
@@ -119,7 +119,7 @@ Status: 200
 |  返回值  |  用户角色信息   |
 
 ```javascript
-GET /roles/{roleId}
+POST /roles/getRoleByID/{roleId}
 
 {
     roleId: 001,
@@ -136,7 +136,7 @@ GET /roles/{roleId}
 |  返回值  | 全部角色信息 |
 
 ```javascript
-GET /roles
+POST /roles/getAllRoles
 
 [
     {
@@ -156,7 +156,7 @@ GET /roles
 |  返回值  |  角色信息是否添加成功  |
 
 ```javascript
-POST /roles
+POST /roles/addRole
 {
     roleName: "二级审核者",
     roleDescription: "对已审核过的数据再次进行审核",
@@ -173,7 +173,7 @@ Status 200
 |  返回值  |   角色信息是否修改成功   |
 
 ```javascript
-POST /roles/{roleId}
+POST /roles/updateRoleByID/{roleId}
 {
     roleId: 001,
     roleName: "管理员",
@@ -190,7 +190,7 @@ Status 200
 |  返回值  | 角色信息是否删除成功 |
 
 ```javascript
-DELETE /roles/{roleId}
+DELETE /roles/deleteRoleByID/{roleId}
 
 Status 200
 ```
@@ -203,7 +203,7 @@ Status 200
 |  返回值  |   用户权限信息   |
 
 ```javascript
-GET /powers/{powerId}
+POST /powers/getPowerByID/{powerId}
 
 {
     powerId: 004,
@@ -219,7 +219,7 @@ GET /powers/{powerId}
 |  返回值  | 全部用户的角色信息 |
 
 ```javascript
-GET /powers
+POST /powers/getAllPowers
 
 [
     {
@@ -239,7 +239,7 @@ GET /powers
 |  返回值  | 所有病人数量及分布 |
 
 ```javascript
-GET /cases/caseNum/
+POST /cases/caseNum/
 {
     total: 100,
     case: [{"name":"女",
@@ -255,7 +255,7 @@ GET /cases/caseNum/
 |  返回值  | 当前用户所管理的所有用户标记结节数量及分布 |
 
 ```javascript
-GET /measurements/nodeNum
+POST /measurements/nodeNum
 {
     total: 1583,
     case: [	{value: 321, "name": '歧义候选淋巴结'},
@@ -275,7 +275,7 @@ GET /measurements/nodeNum
 |  返回值  | 当前用户所管理的所有标记者已标注数量,已审核数量,未标注数量 |
 
 ```javascript
-GET /cases/getAnnotatorList
+POST /cases/getAnnotatorList
 {
     [{  name:'旋涡鸣人'，
         annotated:30,
@@ -291,7 +291,7 @@ GET /cases/getAnnotatorList
 |  返回值  | 标注者分配病例及其标注与审核情况 |
 
 ```javascript
-GET /cases/getExamedList/
+POST /cases/getExamedList/
 {
     annoList: [{    PatientName: 'Li gang',
                     MRN: '0009629786',
@@ -324,7 +324,7 @@ GET /cases/getExamedList/
 |  返回值  | 当前用户所管理的所有标记者的标注动态 |
 
 ```javascript
-GET /users/getAnnotatorActivity/
+POST /users/getAnnotatorActivity/
 {
     annoList: [{name:'旋涡鸣人',
 				SericeId: '6354132',
@@ -341,7 +341,7 @@ GET /users/getAnnotatorActivity/
 |  返回值  | 当前用户所管理的所有病例数据 |
 
 ```javascript
-GET /cases/annotatorList/
+POST /cases/annotatorList/
 {
 
     caseList: [{PatientName: 'Li gang', 
@@ -599,7 +599,7 @@ POST /startingSliceandEndSlice/getStartingandEndSlicebyId
 |  返回值  | case_info数据库中PatientID的总数 |
 
 ```javascript
-GET /case_info/getTotalPatientNum
+POST /case_info/getTotalPatientNum
 {
     totalPatientNum: 20
 }
@@ -614,7 +614,7 @@ GET /case_info/getTotalPatientNum
 |  返回值  | case_info数据库中病人的性别分布 |
 
 ```javascript
-GET /case_info/getPatientGenderDistribution
+POST /case_info/getPatientGenderDistribution
 {
 	gender: [{"name":"女",
         	"value":70},
@@ -634,7 +634,7 @@ GET /case_info/getPatientGenderDistribution
 |  返回值  | case_info数据库中病人的年龄分布 |
 
 ```javascript
-GET /case_info/getPatientAgeDistribution
+POST /case_info/getPatientAgeDistribution
 {
 	gender: [{"name":"0~14",
         	"value":0},
@@ -660,7 +660,7 @@ GET /case_info/getPatientAgeDistribution
 |  返回值  | case_info数据库中caseID的总数 |
 
 ```javascript
-GET /case_info/getTotalCaseNum
+POST /case_info/getTotalCaseNum
 {
     totalCaseNum: 20
 }
@@ -675,7 +675,7 @@ GET /case_info/getTotalCaseNum
 |  返回值  | measurements数据库中结节的总数 |
 
 ```javascript
-GET /measurements/getTotalNodeNum
+POST /measurements/getTotalNodeNum
 {
     totalNodeNum: 100
 }
@@ -690,7 +690,7 @@ GET /measurements/getTotalNodeNum
 |  返回值  | measurements数据库中结节的分区分布 |
 
 ```javascript
-GET /measurements/getPatientAgeDistribution
+POST /measurements/getPatientAgeDistribution
 {
     nodeDistribution: [	{"value": 321, "name": '侧方区'},
 						{"value": 158, "name": '非侧方区'}]
@@ -706,7 +706,7 @@ GET /measurements/getPatientAgeDistribution
 |  返回值  | measurements数据库中结节的shortestDiameter分布 |
 
 ```javascript
-GET /measurements/getNodeDiameterDistribution
+POST /measurements/getNodeDiameterDistribution
 {
     node: [	{"value": 321, "name": '0~3'},
 			{"value": 158, "name": '3~5'},
@@ -724,7 +724,7 @@ GET /measurements/getNodeDiameterDistribution
 |  返回值  | case_info数据库中结节的status=1的占总case数的比例 |
 
 ```javascript
-GET /case_info/getModelDetectProcess
+POST /case_info/getModelDetectProcess
 {
 	percent : [0.5, 10, 20]
 }
@@ -741,7 +741,7 @@ GET /case_info/getModelDetectProcess
 |  返回值  |    所有病例的良恶性数值    |
 
 ```javascript
-GET /case_info/getCaseNegativeAndPositive
+POST /case_info/getCaseNegativeAndPositive
 {
     "positive":120,
     "negative":250
@@ -757,7 +757,7 @@ GET /case_info/getCaseNegativeAndPositive
 |  返回值  | 近20天内的每日新增病例 |
 
 ```javascript
-GET /case_info/getDailyAddCase
+POST /case_info/getDailyAddCase
 {
 	"date":["2020/10/12","2020/10/13","2020/10/14"]
     "DailyAdd":[150,140,124]
@@ -773,7 +773,7 @@ GET /case_info/getDailyAddCase
 |  返回值  | 所有病人病例情况 |
 
 ```javascript
-GET /case_info/getCaseList
+POST /case_info/getCaseList
 {
       "caseList":[
           {
@@ -901,7 +901,7 @@ POST /measurements/measurementsUpdate
 |  返回值  | 两date之间的每日检查病例数 |
 
 ```javascript
-GET /case_info/getDailyAddCase
+POST /case_info/getDailyAddCase
 {
 	"date":["2020/10/12","2020/10/13","2020/10/14"]
     "DailyAdd":[150,140,124]
@@ -917,7 +917,7 @@ GET /case_info/getDailyAddCase
 |  返回值  | 所有病人病例情况 |
 
 ```javascript
-GET 
+POST 
 [{
       "PatientName": "ji lu xiu",
       "PatientID": "0009369854",
@@ -1077,7 +1077,7 @@ status:200
 |  返回值  | 全部annotator、reviewer的对应关系 |
 
 ```javascript
-GET /users/getAssignedRelations
+POST /users/getAssignedRelations
 {
     "reviewer":[
         {
@@ -1119,7 +1119,7 @@ GET /users/getAssignedRelations
 |  返回值  | 标注者列表及其分配情况  |
 
 ```javascript
-GET /user_case/getAnnotatorListAndCase
+POST /user_case/getAnnotatorListAndCase
 [{
     "userID": 2,
     "userName": "huanghao",
@@ -1141,7 +1141,7 @@ GET /user_case/getAnnotatorListAndCase
 |  返回值  |       修改结果       |
 
 ```javascript
-GET /user_case/modifyAnnotatorCase
+POST /user_case/modifyAnnotatorCase
 [{
     "userID":2,
     "assignedCaseList":[1, 2, 3] //分配给该标注者的caseID列表。
@@ -1327,7 +1327,7 @@ POST /case_info/getReviewersCasesStatus
 |  返回值  | 所有待标注的病例列表（annotatedStatus不为-1的时候） |
 
 ```javascript
-GET /case_info/getAnnotateList
+POST /case_info/getAnnotateList
 [  {
     PatientName: 'yang cong ying',
     PatientID: '0001053245',
@@ -1351,7 +1351,7 @@ GET /case_info/getAnnotateList
 |  返回值  | 符合条件的淋巴结列表 |
 
 ```javascript
-GET /measurements/searchNodes
+POST /measurements/searchNodes
 输入参数：
 [{
     "location": "BW",
