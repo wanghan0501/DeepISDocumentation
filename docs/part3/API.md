@@ -1353,7 +1353,8 @@ POST /case_info/getAnnotateList
 ```javascript
 POST /measurements/searchNodes
 输入参数：
-[{
+[{ 
+    "userID": 1,
     "location": "BW",
     "shortestDiameter": [3, 5],	//左闭右开
     "evalution": "positive",	//定性
