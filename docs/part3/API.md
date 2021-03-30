@@ -1421,3 +1421,26 @@ POST /measurements/getNodeSituationByPatient
 }
 ```
 
+## 新增API需求（3/28/2021）
+
+### 获取DeepIS和Viewer部署的IP地址及dicom4chee的wadoUriRoot等（解决前端硬编码问题）
+
+|  方法名  |    getDeployedIPAddress    |
+| :------: | :------------------------: |
+| 传入参数 |             无             |
+|  返回值  | DeepIS和Viewer部署的IP地址 |
+
+```javascript
+POST /getDeployedIPAddress
+输入参数：
+无
+
+返回结果://暂未确定返回状态码
+{
+   viewerDeployedIP: 'http://localhost:3000/viewer/',
+   deepISDeployedIP: 'http://localhost:8088/',
+   dicomWebWadoUriRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/wado',
+   dicomWebQidoRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
+   dicomWebWadoRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
+}
+```
