@@ -1444,8 +1444,8 @@ POST /getDeployedIPAddress
 返回结果://暂未确定返回状态码
 //内网domain返回结果
 {
-   viewerDeployedIP: 'http://localhost:3000/viewer/',
-   deepISDeployedIP: 'http://localhost:8088/',
+   viewerDeployedIP: 'http://192.168.7.170:3000/viewer/',
+   deepISDeployedIP: 'http://192.168.7.170:3002/',
    dicomWebWadoUriRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/wado',
    dicomWebQidoRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
    dicomWebWadoRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
