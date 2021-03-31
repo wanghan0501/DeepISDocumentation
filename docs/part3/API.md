@@ -1,4 +1,3 @@
-[TOC]
 
 # 前后端API定义
 
@@ -1423,25 +1422,40 @@ POST /measurements/getNodeSituationByPatient
 
 ## 新增API需求（3/28/2021）
 
-### 获取DeepIS和Viewer部署的IP地址及dicom4chee的wadoUriRoot等（解决前端硬编码问题）
+### 根据当前域名获取DeepIS和Viewer部署的IP地址及dicom4chee的wadoUriRoot等（解决前端硬编码问题）
 
-|  方法名  |    getDeployedIPAddress    |
-| :------: | :------------------------: |
-| 传入参数 |             无             |
-|  返回值  | DeepIS和Viewer部署的IP地址 |
+|  方法名  |                     getDeployedIPAddress                     |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                           当前域名                           |
+|  返回值  | 根据当前域名返回DeepIS和Viewer部署的IP地址，如果当前域名是内网返回内网ip，否则返回外网ip |
 
 ```javascript
 POST /getDeployedIPAddress
 输入参数：
-无
+{
+    currentDomain:"192.168.7.170" //内网domain
+}
+或者
+{
+    currentDomain:"viewer.deepgs.machineilab.org" //外网domain
+}
 
 返回结果://暂未确定返回状态码
+//内网domain返回结果
 {
-   viewerDeployedIP: 'http://localhost:3000/viewer/',
-   deepISDeployedIP: 'http://localhost:8088/',
+   viewerDeployedIP: 'http://192.168.7.170:3000/viewer/',
+   deepISDeployedIP: 'http://192.168.7.170:3002/',
    dicomWebWadoUriRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/wado',
    dicomWebQidoRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
    dicomWebWadoRoot:'http://192.168.7.170:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
+}
+//外网domain返回结果
+{
+   viewerDeployedIP: 'http://deepgs.machineilab.org/viewer/',
+   deepISDeployedIP: 'http://viewer.deepgs.machineilab.org//',
+   dicomWebWadoUriRoot:'http://data.deepgs.machineilab.org/dcm4chee-arc/aets/DCM4CHEE/wado',
+   dicomWebQidoRoot:'http://data.deepgs.machineilab.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+   dicomWebWadoRoot:'http://data.deepgs.machineilab.org/dcm4chee-arc/aets/DCM4CHEE/rs',
 }
 ```
 ## 新增API需求（3/31/2021）
