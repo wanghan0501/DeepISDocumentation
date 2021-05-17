@@ -1477,3 +1477,18 @@ POST /detectCaseAgain
 
 返回结果:无
 ```
+
+## 修改API需求（6/5/2021)
+
+### 重新给审核者分配标注者时（更新annotator_reviewer表），需要在reviewer_measurement表中根据annotatorID和reviewerID查询对应的所有case, 再根据caseID查询case_info表中的provedStatus状态：
+
+#### -如果该审核者对应的所有case都未被审核（provedStatus为-1），则可以直接更新annotator_reviewer表，删除原有的分配，同时删除reviewer_measurement表中对应的表项。
+
+#### -如果该审核者对应的所有case都已经审核（provedStatus为1),则可以直接更新annotator_reviewer表，删除原有的分配，但不能删除reviewer_measurement表中对应的表项。（前端需统计审核者已经审核的所有病例）
+
+#### -其他情况均不能更新审核者标注者关系
+
+|  方法名  |               assignReviewer               |
+| :------: | :----------------------------------------: |
+| 传入参数 | 审核者reviewerID,标注者ID列表annotatorList |
+|  返回值  |           无返回值（要有返回码）           |
