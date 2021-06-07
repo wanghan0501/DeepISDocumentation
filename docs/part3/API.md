@@ -1492,3 +1492,70 @@ POST /detectCaseAgain
 | :------: | :----------------------------------------: |
 | 传入参数 | 审核者reviewerID,标注者ID列表annotatorList |
 |  返回值  |           无返回值（要有返回码）           |
+
+
+
+## 新增API需求( 6/7/2021 )
+###  增加审核者与标注者关系
+是否可以更新审核者与标注者的关系逻辑同上,此api只更改审核关系，具体表现如下：
+
+| 关系操作 |     审核者a工作状态      |           操作是否成功            |
+| :------: | :----------------------: | :-------------------------------: |
+|   删除   |     a审核完成b的工作     | 成功(不删除reviewer_measurement） |
+|   删除   |    a未开始审核b的工作    |  成功(删除reviewer_measurement)   |
+|   删除   |    a审核了部分b的工作    |               失败                |
+|   新增   | a与b本身无关系，直接新建 |                                   |
+
+
+|  方法名  | addAnnotatorToReviwer   |
+| :------: | :------------------: |
+| 传入参数 | 审核者userID(string), 标注者userID(list) |
+|  返回值  |       结果       |
+
+```javascript
+POST /annotator_reviewer/addAnnotatorToReviwer
+[{
+    "reviewerID":2,
+    "annotatorID":[1, 2, 3] //给该审核者新增的审核关系
+}]
+
+新增成功：
+{
+    "code":0 
+}
+新增失败:
+{
+    "code":-1,
+    "data":{
+        'fail':[1]//因为他们之间的审核关系已经存在了
+    }
+}
+```
+###  删除审核者与标注者关系
+
+|  方法名  | deleteAnnotatorOfReviwer   |
+| :------: | :------------------: |
+| 传入参数 | 审核者userID(string), 标注者userID(list) |
+|  返回值  |       修改结果       |
+
+```javascript
+POST /annotator_reviewer/deleteAnnotatorOfReviwer
+[{
+    "reviewerID":2,
+    "annotatorID":[1, 2, 3] //要删除的关系
+}]
+
+
+删除成功:
+{
+    "code":0
+}
+删除失败:
+标注者列表中，审核员已经开始审核工作，无法删除某个关系
+{
+    "code":-1,
+    "data":{
+        'fail':[1,2],
+    }//1 2为因已经开始审核工作，而无法删除的关系
+}
+```
