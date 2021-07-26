@@ -6,7 +6,6 @@
 
 项目所有权限如下，分为二级权限管理模式，其中一级权限用于侧边栏渲染对应组件，二级权限用于控制组件中相应功能，以达到不同权限用户生成不同页面及不同功能的作用。
 
-
 <table>
 	<tr>
         <td colspan="2">一级权限</td>
@@ -104,7 +103,14 @@
         <td>case:view</td>
         <td>病例展示</td>
     </tr>     
+    <tr>
+        <td>study</td>
+        <td>StudyCase</td>
+        <td>study:case</td>
+        <td>学习标注</td>
+    </tr>   
 </table>
+
 
 
 ## 角色表
