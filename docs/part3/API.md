@@ -1559,3 +1559,118 @@ POST /annotator_reviewer/deleteAnnotatorOfReviwer
     }//1 2为因已经开始审核工作，而无法删除的关系
 }
 ```
+
+## 新增API需求( 9/8/2021 )
+###  获取学生用户的最近标注案例（包括‘在标注’与‘已标注完’）
+
+|  方法名  |              getStudentAnnotateHistoryListById               |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 | 学生用户userID(理论上不会出现空值或错值，为避免因数据库数据错误问题而引起后台报错，可以校验该值是否存在在库中) |
+|  返回值  |                           修改结果                           |
+
+```python
+POST 后端设置后注意修改这个地方
+
+#传入参数
+{
+    "userID":2,
+}
+
+#返回参数
+#只返回靠近最近时间的前三个。按照插库为顺序插入的逻辑，在库中应该是顺序越靠后时间越新
+#注意这里并不只是‘正在标注’状态的，还有已经标注完的，也就是说关于这个id的所有的学习标注
+#timestamp转换为正常时间的代码，这是es6的
+#   function getTime(timestamp) {
+#     return new moment.unix(timestamp / 1000).format('YYYY年MM月DD日 HH时mm分')
+#   }
+
+{
+    data:[
+        {
+          'AccessionNumber': 'CT0123456',
+          'timestamp':'134892548'
+          'status':0
+           #这里的-1 0 1 2 值与retrive/getApprovedCase中status的一致
+        },
+    ]
+}
+```
+
+
+###  获取学生用户的标注总体情况
+
+|  方法名  |              getStudentAnnotateOverview               |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 | 学生用户userID(理论上不会出现空值或错值，为避免因数据库数据错误问题而引起后台报错，可以校验该值是否存在在库中) |
+|  返回值  |                           修改结果                           |
+
+```python
+POST 后端设置后注意修改这个地方
+
+#传入参数
+{
+    "userID":2,
+}
+
+#返回参数
+
+{
+    data:[
+        {
+          'caseNum': '32',
+        #   他标注的所有病例个数
+          'correctRate':0.8,
+        #   已反馈完成的数据中，正确个数/金标准案例中的标注个数
+          'averageNumOfMislabel':12,
+        #   平均错标个数，平均每个案例错标多少个
+          'averageNumOfMissingLabel':10,
+        #  平均漏标个数，平均每个案例漏标多少个
+        },
+    ]
+}
+```
+获取approvedCase内的所有case列表用以学习者学习标注
+
+|  方法名  | getApprovedCaseList  |
+| :------: | :------------------: |
+| 传入参数 | 学习者userID(string) |
+|  返回值  |         如下         |
+
+```python
+POST /retrive/getApprovedCase
+
+传入参数
+{
+'userID':'123452'
+}
+
+返回结果
+{
+...
+//这里data里面是一个病例的list,list内每个item都是一个
+data: [
+    {	
+        #case1
+        #前面两项是基础信息
+        "AccessionNumber":"CT00549838",
+        "StudyInstanceUID":"1.2.840.78.75:1211412....",
+        
+        #后面两项是统计信息
+        "status":-1,
+        #值范围为[-1,∞)，当此值为-1表明没有标注过，值为0表明正在标注，值为大于0的数，如1，表明该学习者已经完成此案例1次标注。
+        #该信息不建议保存数据库中，即先查approvedM表拿到所有caseList，查询该userID在学生表中是否有标注，如有为0，没有查询保存学生融合结果的表，如有为1或更多
+        "nodeNum":32,
+        #结节数目统计
+    },
+    {
+        #case2
+        "AccessionNumber":"CT00549838",
+        "StudyInstanceUID":"1.2.840.78.75:1211412....",
+        "status":3,
+        "nodeNum":32
+    }
+]
+
+```
+
+
