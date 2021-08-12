@@ -1588,9 +1588,11 @@ POST 后端设置后注意修改这个地方
     data:[
         {
           'AccessionNumber': 'CT0123456',
-          'timestamp':'134892548'
+          'timestamp':'134892548'，
+          "StudyInstanceUID":"1.2.840.78.75:1211412....",
           'status':0
-           #这里的-1 0 1 2 值与retrive/getApprovedCase中status的一致
+        #    这里0为在标注，1为已完成，这个只是统计该次标注的情况
+        # 也就是说这个api只是统计学生标注表和校验表中的所有数据情况，知道近期在标注的是哪几个就可以了
         },
     ]
 }
@@ -1673,4 +1675,62 @@ data: [
 
 ```
 
+## 新增API需求( 12/8/2021 )
+###  获取学生用户的所有标注案例（包括‘在标注’与‘已标注完’）
 
+|  方法名  |              getStudentAnnotateListById               |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 | 学生用户userID(理论上不会出现空值或错值，为避免因数据库数据错误问题而引起后台报错，可以校验该值是否存在在库中) |
+|  返回值  |                           修改结果                           |
+
+```python
+POST 后端设置后，注意修改这个地方
+
+#传入参数
+{
+    "userID":2,
+}
+
+#返回参数
+#只返回靠近最近时间的前三个。按照插库为顺序插入的逻辑，在库中应该是顺序越靠后时间越新
+#注意这里并不只是‘正在标注’状态的，还有已经标注完的，也就是说关于这个id的所有的学习标注
+#timestamp转换为正常时间的代码，这是es6的
+#   function getTime(timestamp) {
+#     return new moment.unix(timestamp / 1000).format('YYYY年MM月DD日 HH时mm分')
+#   }
+
+{
+    data:[
+      {
+        "AccessionNumber":'CT0qwgqwg',
+        'StudyInstanceUID':'123457964awe:weawegawe8g',
+        'timestamp':d,
+        'status':2,
+        # 0表示在标注 1表示正在校验 2表示已经校验完毕（按照现在的逻辑可能没有状态1存在，如果没有的话，可以不返回这种值，只返回0 2 ，留个位置在这里）
+        'nodeNum':52,
+        # 金标准中的淋巴结个数
+        'annotatedNodeNum':46,
+        # 标注出来的淋巴结个数
+
+
+# 以下三个数据只有当status=2，也就是校验完毕后才会存在
+        'correctRate':0.9,
+        # 位置正确的淋巴结个数/金标准淋巴结个数
+        'mislabeling':3,
+        # 错标的淋巴结个数
+        'missingLabel':4,
+        # 漏标的淋巴结个数
+      },
+      {
+        "AccessionNumber":'Cqwgqg1456',
+        'StudyInstanceUID':'123457964awe:weawehaerjawe8g',
+        'nStaging':'t0',
+        'timestamp':d,
+        'status':1,
+        'nodeNum':52,
+        'annotatedNodeNum':46,
+# 由于此数据status=1，也就是正在校验（或者正在标注），故没有核验相关的数据。
+      },
+    ]
+    
+}
