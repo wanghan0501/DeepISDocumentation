@@ -1807,3 +1807,64 @@ POST 后端记得补充这里！！！
     }
     description:'No reason for rejection'
 }
+```
+
+## 修改api需求（10/18/2021）
+
+### 标注者标注管理界面获取case信息及相应的状态信息
+
+|  方法名  |                    getAnnotatorsCaseInfo                     |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                            userID                            |
+|  返回值  |        该标注者所需标注的所有case信息及相应case的状态        |
+|   备注   | 如果statusOfAnnotated、statusOfReviewed字段相应信息无法和其他字段同时获取，可以分开写，但希望最后能按下方给出的格式组织数据返回。如果文档中关于statusOfAnnotated、statusOfReviewed两个字段的描述有问题联系csh一起讨论 |
+
+```javascript
+POST /case_info/getAnnotatorsCaseInfo
+{
+    userID: 6
+}
+
+[
+  {
+    PatientName: 'ji lu xiu',
+    PatientID: '009369854',
+    AccessionNumber: 'CT00549838',
+    StudyDate: '20130603',
+    statusOfAnnotated: ['0'], //该标注者对该例case的标注状态
+    statusOfReviewed: ['0'], //该标注者的审核者对该例case的审核状态
+    StudyInstanceUID: '1.2.840.78.75.7.5.280728.1370251044'，
+    rejectReason:''//被驳回的原因，没有的话
+  },
+  {
+    PatientName: 'li gang',
+    PatientID: '0009629786',
+    AccessionNumber: 'CT00566598',
+    StudyDate: '20130620',
+    statusOfAnnotated: ['1'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1674158.1371717835'，
+    rejectReason:''
+  },
+  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    AccessionNumber: 'CT00705850',
+    StudyDate: '20131030',
+    statusOfAnnotated: ['0'],
+    statusOfReviewed: ['0'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.10839406.1383139266'，
+    rejectReason:''
+  },
+  {
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    AccessionNumber: 'CT00471087',
+    StudyDate: '20130323',
+    statusOfAnnotated: ['1'],
+    statusOfReviewed: ['2'],
+    StudyInstanceUID: '1.2.840.78.75.7.5.1842989.1364010904'，
+    rejectReason:'标注错误太多'
+  }
+]
+```
