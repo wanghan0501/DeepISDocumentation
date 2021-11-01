@@ -1887,3 +1887,62 @@ POST /case_info/getAnnotatorsCaseInfo
 | 传入参数 |                            -                            |
 |  返回值  |        备份数据库是否成功        |
 |   备注   | 脚本路径：/root/workspace/mongodb/mongodb-linux-x86_64-4.0.7/bin/autoDump.sh 服务器：192.168.7.174 |
+
+
+## 修改api需求（11/1/2021）
+
+获取approvedCase内的所有case列表用以学习者学习标注
+
+|  方法名  | getApprovedCaseList  |
+| :------: | :------------------: |
+| 传入参数 | 学习者userID(string) |
+|  返回值  |         如下         |
+
+```python
+POST /retrive/getApprovedCase
+
+传入参数
+# 这里的current指的是当前页为第几页，pageSize是说一页应该有多少个，
+# 比如：
+# current：2，pageSize：20
+# 那么就应该查询第1*20个到2*20个
+# current：1，pageSize：10
+# 那么就应该查询第0*10个到1*10个
+{
+'userID':'123452',
+'current':1,
+'pageSize':10,
+}
+
+返回结果
+{
+...
+//这里data里面是一个病例的list,list内每个item都是一个
+data: 
+# total是指的一共有多少个案例
+    total:500
+    # caseList里面是装的所有可以用来学习的案例
+    caseList:[
+        {	
+            #case1
+            #前面两项是基础信息
+            "AccessionNumber":"CT00549838",
+            "StudyInstanceUID":"1.2.840.78.75:1211412....",
+            
+            #后面两项是统计信息
+            "status":-1,
+            #值范围为[-1,∞)，当此值为-1表明没有标注过，值为0表明正在标注，值为大于0的数，如1，表明该学习者已经完成此案例1次标注。
+            #该信息不建议保存数据库中，即先查approvedM表拿到所有caseList，查询该userID在学生表中是否有标注，如有为0，没有查询保存学生融合结果的表，如有为1或更多
+            "nodeNum":32,
+            #结节数目统计
+        },
+        {
+            #case2
+            "AccessionNumber":"CT00549838",
+            "StudyInstanceUID":"1.2.840.78.75:1211412....",
+            "status":3,
+            "nodeNum":32
+        }
+    ]
+
+```
