@@ -1912,7 +1912,13 @@ POST /retrive/getApprovedCase
 'userID':'123452',
 'current':1,
 'pageSize':10,
+# AccessionNumber并不是强制出现的，而且这个搜索可能是模糊搜索
+# 当用户有查询操作时，才会有AccessionNumber出现，如果么有AccessionNumber这个关键字
+# 则没有进行特殊查询
+'AccessionNumer':'212468456'
 }
+
+
 
 返回结果
 {
