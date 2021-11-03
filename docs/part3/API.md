@@ -1951,3 +1951,94 @@ data:
     ]
 
 ```
+
+
+## 修改api需求（11/1/2021）
+### 获取所有病人病例情况
+
+|  方法名  |   getCaseList    |
+| :------: | :--------------: |
+| 传入参数 |       null       |
+|  返回值  | 分页返回病人病例情况 |
+
+```javascript
+POST case_manage/case_info/getCaseList
+
+传入参数:
+{
+'current':1,
+'pageSize':10,
+// 下面这两个是查询条件，这两个可能会同时有值，也可能只有一个有值，也可能都为null
+// 当有值时需要按条件进行查询
+'PatientID':'aweg',
+'PatientName': 'a',
+}
+
+返回：
+
+data:{
+    total:1351,
+    caseList:
+    [{
+      "PatientName": "ji lu xiu",
+      "PatientID": "0009369854",
+      "PatientSex": "女",
+      "PatientAge":"36",
+      "dateList":[
+          {
+              "StudyDate":"20130603",
+              "caseNum":2,
+              "caseList":[
+                  {
+                      "caseID":"0009369854:1.2.840.78.75.7.5.280728.1370251044:20130603",
+                      "AccessionNumber":"CT00549838",
+                      "StudyInstanceUID": "1.2.840.78.75.7.5.280728.1370251044",
+                      "modelStatus":false, 
+                      "annotatedStatus":false,
+                  },
+                  {
+                    "caseID":"0009369854:1.2.840.78.75.7.5.280728.1467894597:20130603",
+                    "AccessionNumber":"CT00549838",
+                    "StudyInstanceUID": "1.2.840.78.75.7.5.280728.1467894597",
+                    "modelStatus":false, 
+                    "annotatedStatus":false,
+                },                              
+              ]
+          },  
+        ]
+    },
+    {
+      "PatientName": "tao qi fa",
+      "PatientID": "0008987865",
+      "PatientSex": "男",
+      "PatientAge":"65",
+      "dateList":[
+          {
+              "StudyDate":"20040310",
+              "caseNum":1,
+              "caseList":[
+                  {
+                      "caseID":"0008987865:1.2.840.78.75.7.5.1842989.1364010904:0008987865",
+                      "AccessionNumber":"CT00549838",
+                      "StudyInstanceUID":"1.2.840.78.75.7.5.1842989.1364010904",
+                      "modelStatus":false, 
+                      "annotatedStatus":true,
+                  },                                    
+              ]
+          },
+          {
+            "StudyDate":"20040310",
+            "caseNum":2,
+            "caseList":
+                [{
+                    "caseID":"0008987865:1.2.840.78.75.7.5.1842989.1364010904:0008987865",
+                    "AccessionNumber":"CT00549838",
+                    "StudyInstanceUID":"1.2.840.78.75.7.5.1842989.1364010904",
+                    "modelStatus":false, 
+                    "annotatedStatus":true
+                }]
+            }
+        ]
+    }]
+
+```
