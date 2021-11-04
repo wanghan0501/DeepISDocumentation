@@ -2042,3 +2042,74 @@ data:{
     }]
 
 ```
+## 修改api需求（11/4/2021）
+###  获取标注者列表
+
+|  方法名  | getAnnotatorListAndCase |
+| :------: | :---------------------: |
+| 传入参数 |          null           |
+|  返回值  | 标注者列表及其分配情况  |
+
+```javascript
+POST /user_case/getAnnotatorListAndCase
+
+传入参数:
+{
+'current':1,
+'pageSize':10,
+}
+
+{
+    toal:20,
+    annotatorList:[{
+    "userID": 2,
+    "userName": "huanghao",
+    "assignedCaseNum": 1, 	//已经分配给该标注者的case数量
+    "assignedCaseList": [3]	//已经分配给该标注者的caseID列表，未分配时为[]
+  }, {
+    "userID": 3,
+    "userName": "yangxu",
+    "assignedCaseNum": 2, 
+    "assignedCaseList": [1, 2]
+  }]
+}
+
+```
+
+### 返回所有待标注的病例数据
+
+|  方法名  |                   getAnnotateList                   |
+| :------: | :-------------------------------------------------: |
+| 传入参数 |                        null                         |
+|  返回值  | 所有待标注的病例列表（annotatedStatus不为-1的时候） |
+
+```javascript
+POST /case_info/getAnnotateList
+传入参数:
+{
+'current':1,
+'pageSize':10,
+// 病例索引号
+'AccessionNumber':null,
+'PatientName':null,
+}
+
+{
+    total:300,
+    caseList:[  {
+    PatientName: 'yang cong ying',
+    PatientID: '0001053245',
+    assignedAnnotator: ['huanghao','pz'],
+    caseID: '0001053245:1.2.840.78.75.7.5.10839406.1383139266:1.3.12.2.1107.5.1.4.66043.30000013103006375212500083837'
+  },{
+    PatientName: 'tao qi fa',
+    PatientID: '0008987865',
+    assignedAnnotator: [],
+    caseID: '0008987865:1.2.840.78.75.7.5.1842989.1364010904:1.3.12.2.1107.5.1.4.73473.30000013032215343534300021955'
+  }]
+    
+
+}
+
+
+```
