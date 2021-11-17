@@ -2111,5 +2111,16 @@ POST /case_info/getAnnotateList
 
 }
 
+```
+
+## 修改api需求（11/13/2021）
+
+### 体验用户申请升级权限，填写必要信息后上传
+|  方法名  |                      UpdatePermission                         |
+| :------: | :----------------------------------------------------------: |
+| 传入参数 |                         info(json)                            |
+|  返回值  |                    是否提交成功（boolean）                      |
+|   备注   |通过该功能把体验用户提交的信息传入后台并自动转发邮箱，参数示例：info：{name：xx，gender: xx, email: xx, tel: xx, institution: xx, introduction：xx}|
+
 
 ```
