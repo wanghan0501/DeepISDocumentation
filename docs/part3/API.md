@@ -2189,3 +2189,45 @@ POST /game/getAllAnnotatorsWorkProgress
 }
 
 ```
+
+
+### 【人机挑战需求】统计平均准确率
+
+|  方法名  | getAverageAccurate  |
+| :------: | :------------------: |
+| 传入参数 | null |
+|  返回值  |         如下         |
+
+```python
+POST /game/getAverageAccurate
+
+传入参数
+
+
+返回结果
+# 计算所有人的准确率平均数
+{   
+    code:0,
+    msg:'成功',
+    data:{
+        # roleID为200的人数
+        annotatorNum:10,
+
+        # 平均结节位置的正确率
+        locationAccurate:92.36,
+
+        # 平均结节分级正确率
+        stageAccurate:91.35，
+
+        # 平均位置的假阳个数
+        # 这个的单位是 x/每例病例
+        # 比如 假阳个数为1 则是10人的平均水平是，每个病例会标1个假阳结节
+        falsePositive: 3,
+
+        # 平均位置的假阳个数
+        # 同上
+        falsePositive: 2,
+    }
+}
+
+```
