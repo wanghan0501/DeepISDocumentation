@@ -2226,7 +2226,7 @@ POST /game/getAverageAccurate
 
         # 平均位置的假阳个数
         # 同上
-        falsePositive: 2,
+        falseNegative: 2,
     }
 }
 
