@@ -1619,7 +1619,7 @@ POST 后端设置后注意修改这个地方
     ]
 }
 ```
-获取approvedCase内的所有case列表用以学习者学习标注
+### 获取approvedCase内的所有case列表用以学习者学习标注
 
 |  方法名  | getApprovedCaseList  |
 | :------: | :------------------: |
@@ -2148,4 +2148,44 @@ POST (后端记得补充这里的路径地址！！！)
     }
 ....
 }
+```
+
+
+## 新增API需求( 8/12/2021 )
+
+### 【人机挑战需求】人类标注者的标注进度
+
+|  方法名  |getAllAnnotatorsWorkProgress  |
+| :------: | :------------------: |
+| 传入参数 | null |
+|  返回值  |         如下         |
+
+```python
+POST /game/getAllAnnotatorsWorkProgress
+
+传入参数
+
+
+返回结果
+# 查找所有roleId为100的角色标记了
+{   
+    code:0,
+    msg:'成功',
+    data:[
+        {
+            annotatedCase: 33
+            unannotatedCase: 2
+            userID: 11
+            username: "liuqian"
+        },
+        {
+            annotatedCase: 47
+            unannotatedCase: 4
+            userID: 12
+            username: "hufangyuan"
+        },
+        ....
+    ]
+}
+
 ```
