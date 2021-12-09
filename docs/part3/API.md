@@ -1619,7 +1619,7 @@ POST 后端设置后注意修改这个地方
     ]
 }
 ```
-获取approvedCase内的所有case列表用以学习者学习标注
+### 获取approvedCase内的所有case列表用以学习者学习标注
 
 |  方法名  | getApprovedCaseList  |
 | :------: | :------------------: |
@@ -2122,5 +2122,123 @@ POST /case_info/getAnnotateList
 |  返回值  |                    是否提交成功（boolean）                      |
 |   备注   |通过该功能把体验用户提交的信息传入后台并自动转发邮箱，参数示例：info：{name：xx，gender: xx, email: xx, tel: xx, institution: xx, introduction：xx}|
 
+
+```
+
+## 新增API需求( 19/11/2021 )
+
+### 审核者取消提交审核
+
+
+|  方法名  |        cancelReviewedCase        |
+| :------: | :---------------------------------: |
+| 传入参数 |  如下| 
+|  返回值  |        如下                             |
+
+```javascript
+POST (后端记得补充这里的路径地址！！！)
+{
+    reviewerID: 3,
+    reviewerName: "reviewer",
+    caseID: "1908150123:1.2.840.10008.5212987656:1.2.840.10008.5.212987656.183754631",   
+}
+```
+
+```python
+{   
+    # 修改成功
+    code:0,
+    data:null
+}
+{   
+    # 失败时要返回是哪一例失败了
+    # 修改失败
+    code:-1,
+    data:{
+        caseID:"1908150123:1.2.840.10008.5212987656:1.2.840.10008.5.212987656.183754631"
+    }
+....
+}
+```
+
+
+## 新增API需求( 8/12/2021 )
+
+### 【人机挑战需求】人类标注者的标注进度
+
+|  方法名  |getAllAnnotatorsWorkProgress  |
+| :------: | :------------------: |
+| 传入参数 | null |
+|  返回值  |         如下         |
+
+```python
+POST /game/getAllAnnotatorsWorkProgress
+
+传入参数
+
+
+返回结果
+# 查找所有roleId为100的角色标记了
+{   
+    code:0,
+    msg:'成功',
+    data:[
+        {
+            annotatedCase: 33
+            unannotatedCase: 2
+            userID: 11
+            username: "liuqian"
+        },
+        {
+            annotatedCase: 47
+            unannotatedCase: 4
+            userID: 12
+            username: "hufangyuan"
+        },
+        ....
+    ]
+}
+
+```
+
+
+### 【人机挑战需求】统计平均准确率
+
+|  方法名  | getAverageAccurate  |
+| :------: | :------------------: |
+| 传入参数 | null |
+|  返回值  |         如下         |
+
+```python
+POST /game/getAverageAccurate
+
+传入参数
+
+
+返回结果
+# 计算所有人的准确率平均数
+{   
+    code:0,
+    msg:'成功',
+    data:{
+        # roleID为200的人数
+        annotatorNum:10,
+
+        # 平均结节位置的正确率
+        locationAccurate:92.36,
+
+        # 平均结节分级正确率
+        stageAccurate:91.35，
+
+        # 平均位置的假阳个数
+        # 这个的单位是 x/每例病例
+        # 比如 假阳个数为1 则是10人的平均水平是，每个病例会标1个假阳结节
+        falsePositive: 3,
+
+        # 平均位置的假阳个数
+        # 同上
+        falseNegative: 2,
+    }
+}
 
 ```
